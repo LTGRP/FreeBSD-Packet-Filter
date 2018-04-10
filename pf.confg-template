@@ -5,6 +5,7 @@ ext_if="em0"
 ### Ports ###
 tcp_ports="{}"
 udp_ports="{}"
+icmp_types = "echoreq"
 
 ### hosts ###
 smb_client = ""
@@ -16,13 +17,13 @@ martians = "{}"
 set skip on lo
 ######### Queueing ###############
 ######### Normalization ##########
+scrub in all
+
 ######### Translation ############
 ######### Filtering ##############
 ### Block default ###
 block in all
 block out all
-
-scrub in all
 
 ### Drop martians ###
 block drop in quick on $ext_if from $martians to any
@@ -32,7 +33,7 @@ block drop out quick on $ext_if from any to $martians
 antispoof quick for $ext_if
 
 ### Allow ping ###
-pass inet proto icmp-type echoreq
+pass inet proto icmp all icmp-type $icmp_types keep state
 
 ### $ext_if inbound  ###
 pass in on $ext_if proto tcp from $local_networks to $ext_if port ssh
