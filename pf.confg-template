@@ -41,7 +41,7 @@ pass in on $ext_if proto tcp from $local_networks to $ext_if port $tcp_ports
 pass in on $ext_if proto udp from $local_networks to $ext_if port $udp_port
 
 ### $ext_if outbound ###
-pass out on $ext_if tcp proto from $ext_if to any
-pass out on $ext_if udp proto from $ext_if to any
+pass out on $ext_if inet proto tcp from $ext_if to any
+pass out on $ext_if inet proto udp from $ext_if to any
 #pass out on $ext_if inet proto tcp from $ext_if to $local_networks port $tcp_ports
 #pass out on $ext_if inet proto udp from $ext_if to $local_networks port $udp_ports
